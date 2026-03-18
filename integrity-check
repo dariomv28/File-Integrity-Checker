@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+import argparse
+from core import init, check, update
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="File Integrity Checker"
+    )
+    subparsers = parser.add_subparsers(dest="command")
+
+    # ===== INIT =====
+    parser_init = subparsers.add_parser("init", help="Initialize hash database")
+    parser_init.add_argument("path", help="File or directory path")
+
+    # ===== CHECK =====
+    parser_check = subparsers.add_parser("check", help="Check file integrity")
+    parser_check.add_argument("path", help="File or directory path")
+
+    # ===== UPDATE =====
+    parser_update = subparsers.add_parser("update", help="Update hash database")
+    parser_update.add_argument("path", help="File or directory path")
+
+    # Parse args
+    args = parser.parse_args()
+
+    if args.command == "init":
+        init(args.path)
+    elif args.command == "check":
+        check(args.path)
+    elif args.command == "update":
+        update(args.path)
+    else:
+        parser.print_help()
+
+if __name__ == "__main__":
+    main()
